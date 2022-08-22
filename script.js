@@ -1,0 +1,1 @@
+const DEFAULTGRIDSIZE = 16;

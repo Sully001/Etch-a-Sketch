@@ -37,20 +37,19 @@ header {
 
 .canvas {
     background-color: white;
-    height: 440px;
-    width: 440px;
+    min-height: 500px;
+    min-width: 500px;
     margin: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    display: flex;
-    flex-wrap: wrap;
-
+    border: 10px solid grey;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
 }
 
 
 .divs {
-    height: 27.5px;
-    width: 27.5px;
-    border-top: 1px solid red;
-    border-left: 1px solid red;
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
     box-sizing: border-box;
 }
