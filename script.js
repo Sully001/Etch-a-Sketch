@@ -1,9 +1,18 @@
+const DEFAULTSIZE = 16;
+
+
 //Create a boolean to check if the mouse has been clicked
 let mouseDown = false;
 document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
 
+//Selecting 
 const canvas = document.querySelector('.canvas');
+const clearButton = document.querySelector('.clear');
+const slider = document.querySelector('.slider');
+const slideContainer = document.querySelector('.slidecontainer');
+const sizeText = document.querySelector('.size-text');
+const gridLineButton = document.querySelector('.toggle-lines');
 
 
 //Creating the grid using CSS GRID
@@ -13,11 +22,11 @@ function createGrid(size) {
     canvas.style["grid-template-rows"] = `repeat(${size}, 1fr)`;
 
 for (let i = 0; i < GRIDSIZE; i++) {
-    const div = document.createElement('div');
-    div.classList.add('divs');
-    div.addEventListener('mouseover', changeColor)
-    div.addEventListener('mousedown', changeColor)
-    canvas.append(div);
+    const gridSquare = document.createElement('div');
+    gridSquare.classList.add('sqaure');
+    gridSquare.addEventListener('mouseover', changeColor)
+    gridSquare.addEventListener('mousedown', changeColor)
+    canvas.append(gridSquare);
 
     }
 }
@@ -30,44 +39,45 @@ function changeColor (e) {
     e.target.style.backgroundColor = 'black';
 }
 
-
-//Function to clear the grid 
-function clearGrid() {
-const clearButton = document.querySelector('.clear');
-clearButton.addEventListener('click', () => {
-    const squares = document.querySelectorAll('.divs');
-    squares.forEach ((square) => {
-        square.style.backgroundColor = 'white';
-    }) 
-} )
-}
-
-function clearFullGrid() {
-    const grid = document.querySelectorAll('.divs');
-    grid.forEach((square) => {
-        square.remove();
+//To clear any color on the grid
+function clearGridColor() {
+    const grid = document.querySelectorAll('.sqaure');
+    grid.forEach((gridSquare) => {
+        gridSquare.style.backgroundColor = 'white';
     })
 }
 
-function changeSize() {
-    const button = document.querySelector('.change-size');
-    const inputSize = document.querySelector('.user-size');
-    button.addEventListener('click', () => {
-        clearFullGrid();
-        const value = inputSize.value;
-        createGrid(value);
-    })
+//To get the first value of the slider when the page loads
+sizeText.innerHTML = slider.value + " X " + slider.value;
+
+//To get the slider value after it has been moved
+function updateSize() {
+    sizeText.innerText = slider.value + " X " + slider.value;
+    removeGridSquares();
+    createGrid(slider.value);
+}
+
+function removeGridSquares() {
+    document.querySelectorAll('.sqaure').forEach(div => div.remove());
+}
+
+function toggleGridLines() {
     
 }
 
-//Running Parts of the Program
-let called = false;
-let promptSize = prompt("What size grid would you like?", 16);
-let changedValue = changeSize();
+
+//Clear Button event listener
+clearButton.addEventListener('click', clearGridColor);
+slider.addEventListener('input', updateSize);
+gridLineButton.addEventListener('click', toggleGridLines);
 
 
-createGrid(promptSize);
-clearGrid();
+
+
+
+//Function Calls
+createGrid(DEFAULTSIZE);
+
 
 
 
