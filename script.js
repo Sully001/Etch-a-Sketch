@@ -62,13 +62,23 @@ function removeGridSquares() {
 }
 
 function toggleGridLines() {
-    
+    const grid = document.querySelectorAll('.sqaure');
+    grid.forEach((square) => {
+        square.classList.toggle('grid-lines');
+    })
+}
+
+function checkGridLines() {
+    if (document.querySelectorAll('.grid-lines').length !== 0) {
+        return true;
+    }
 }
 
 
 //Clear Button event listener
 clearButton.addEventListener('click', clearGridColor);
 slider.addEventListener('input', updateSize);
+gridLineButton.addEventListener('click', toggleGridLines);
 gridLineButton.addEventListener('click', toggleGridLines);
 
 
@@ -77,7 +87,6 @@ gridLineButton.addEventListener('click', toggleGridLines);
 
 //Function Calls
 createGrid(DEFAULTSIZE);
-
 
 
 
