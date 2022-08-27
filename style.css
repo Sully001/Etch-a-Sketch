@@ -27,7 +27,11 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+
+.pad {
+    margin: 10px;
 }
 
 .canvas-main {
@@ -67,3 +71,21 @@ div p {
     flex-direction: column;
     align-items: center;
 }
+
+input[type="color"] {
+    -webkit-appearance: none;
+     width: 80px;
+     height: 80px;
+     border: 0;
+     border-radius: 50%;
+     padding: 0;
+     overflow: hidden;
+     box-shadow: 2px 2px 5px rgba(0,0,0,.1);
+ }
+ input[type="color"]::-webkit-color-swatch-wrapper {
+     padding: 0;
+ }
+ input[type="color"]::-webkit-color-swatch {
+     border: none;
+ }
+

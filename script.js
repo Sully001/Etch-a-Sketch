@@ -1,4 +1,5 @@
 const DEFAULTSIZE = 16;
+let paintColor = 'black';
 
 
 //Create a boolean to check if the mouse has been clicked
@@ -13,7 +14,7 @@ const slider = document.querySelector('.slider');
 const slideContainer = document.querySelector('.slidecontainer');
 const sizeText = document.querySelector('.size-text');
 const gridLineButton = document.querySelector('.toggle-lines');
-
+const pickColor = document.querySelector('.color-picker');
 
 //Creating the grid using CSS GRID
 function createGrid(size) {
@@ -36,7 +37,7 @@ for (let i = 0; i < GRIDSIZE; i++) {
 function changeColor (e) {
     if (e.type === 'mouseover' &&  !mouseDown) return;
     e.preventDefault();
-    e.target.style.backgroundColor = 'black';
+    e.target.style.backgroundColor = paintColor;
 }
 
 //To clear any color on the grid
@@ -68,11 +69,6 @@ function toggleGridLines() {
     })
 }
 
-function checkGridLines() {
-    if (document.querySelectorAll('.grid-lines').length !== 0) {
-        return true;
-    }
-}
 
 
 //Clear Button event listener
@@ -85,8 +81,10 @@ gridLineButton.addEventListener('click', toggleGridLines);
 
 
 
+
 //Function Calls
 createGrid(DEFAULTSIZE);
+console.log(pickColor.value);
 
 
 
