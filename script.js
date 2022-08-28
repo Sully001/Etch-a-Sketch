@@ -14,7 +14,8 @@ const slider = document.querySelector('.slider');
 const slideContainer = document.querySelector('.slidecontainer');
 const sizeText = document.querySelector('.size-text');
 const gridLineButton = document.querySelector('.toggle-lines');
-const pickColor = document.querySelector('.color-picker');
+const colorPicker = document.querySelector('.color-picker');
+const rainbowButton = document.querySelector('.rainbow');
 
 //Creating the grid using CSS GRID
 function createGrid(size) {
@@ -25,9 +26,10 @@ function createGrid(size) {
 for (let i = 0; i < GRIDSIZE; i++) {
     const gridSquare = document.createElement('div');
     gridSquare.classList.add('sqaure');
-    gridSquare.addEventListener('mouseover', changeColor)
-    gridSquare.addEventListener('mousedown', changeColor)
+    gridSquare.addEventListener('mouseover', changeColor);
+    gridSquare.addEventListener('mousedown', changeColor);
     canvas.append(gridSquare);
+
 
     }
 }
@@ -69,6 +71,24 @@ function toggleGridLines() {
     })
 }
 
+function colorPicking() {
+    let color = colorPicker.value;
+    paintColor = color;
+}
+
+function randomColor() {
+    let r = Math.floor((Math.random() * 255) + 1);
+    let g = Math.floor((Math.random() * 255) + 1);
+    let b = Math.floor((Math.random() * 255) + 1);
+    
+    //Convert RGB to Hex
+    let rHex = r.toString(16);
+    let gHex = g.toString(16);
+    let bHex = b.toString(16);
+    let hex =  "#" + rHex + gHex + bHex;
+    
+    return hex;
+}
 
 
 //Clear Button event listener
@@ -76,7 +96,10 @@ clearButton.addEventListener('click', clearGridColor);
 slider.addEventListener('input', updateSize);
 gridLineButton.addEventListener('click', toggleGridLines);
 gridLineButton.addEventListener('click', toggleGridLines);
-
+colorPicker.addEventListener('input', colorPicking);
+rainbowButton.addEventListener('click', () => {
+    rainbowButton.classList.toggle('toggled');
+})
 
 
 
@@ -84,7 +107,4 @@ gridLineButton.addEventListener('click', toggleGridLines);
 
 //Function Calls
 createGrid(DEFAULTSIZE);
-console.log(pickColor.value);
-
-
 
