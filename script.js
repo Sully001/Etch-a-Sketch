@@ -16,6 +16,7 @@ const sizeText = document.querySelector('.size-text');
 const gridLineButton = document.querySelector('.toggle-lines');
 const colorPicker = document.querySelector('.color-picker');
 const rainbowButton = document.querySelector('.rainbow');
+const shadingButton = document.querySelector('.shading');
 
 //Creating the grid using CSS GRID
 function createGrid(size) {
@@ -40,6 +41,8 @@ function changeColor (e) {
     if (e.type === 'mouseover' &&  !mouseDown) return;
     if (rainbowButton.classList.contains('toggled')) {
         paintColor = randomColor();
+    } else {
+        colorPicking();
     }
     e.preventDefault();
     e.target.style.backgroundColor = paintColor;
@@ -69,16 +72,17 @@ function removeGridSquares() {
 
 function toggleGridLines() {
     const grid = document.querySelectorAll('.sqaure');
+    gridLineButton.classList.toggle('toggled');
     grid.forEach((square) => {
         square.classList.toggle('grid-lines');
     })
 }
-
+//Updates the current color from what is picked by the user
 function colorPicking() {
     let color = colorPicker.value;
     paintColor = color;
 }
-
+//Picks are random color and converts it to hex
 function randomColor() {
     let r = Math.floor((Math.random() * 255) + 1);
     let g = Math.floor((Math.random() * 255) + 1);
@@ -93,6 +97,10 @@ function randomColor() {
     return hex;
 }
 
+function shadingColor(color) {
+
+}
+
 
 //Clear Button event listener
 clearButton.addEventListener('click', clearGridColor);
@@ -102,7 +110,10 @@ gridLineButton.addEventListener('click', toggleGridLines);
 colorPicker.addEventListener('input', colorPicking);
 rainbowButton.addEventListener('click', () => {
     rainbowButton.classList.toggle('toggled');
-})
+});
+shadingButton.addEventListener('click', () => {
+    shadingButton.classList.toggle('toggled');
+});
 
 
 
@@ -110,4 +121,9 @@ rainbowButton.addEventListener('click', () => {
 
 //Function Calls
 createGrid(DEFAULTSIZE);
+
+const header = document.querySelector('.header');
+let bgColor = window.getComputedStyle(header, null);
+let rgba = bgColor.getPropertyValue('background-color');
+
 
