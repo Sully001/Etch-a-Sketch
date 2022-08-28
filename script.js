@@ -38,6 +38,9 @@ for (let i = 0; i < GRIDSIZE; i++) {
 //e.preventDefault() prevents dragging of any element
 function changeColor (e) {
     if (e.type === 'mouseover' &&  !mouseDown) return;
+    if (rainbowButton.classList.contains('toggled')) {
+        paintColor = randomColor();
+    }
     e.preventDefault();
     e.target.style.backgroundColor = paintColor;
 }
