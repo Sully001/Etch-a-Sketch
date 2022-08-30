@@ -1,5 +1,5 @@
 const DEFAULTSIZE = 16;
-let paintColor = 'black';
+let paintColor = "rgba(0, 0, 0, 1.0)";
 
 
 //Create a boolean to check if the mouse has been clicked
@@ -41,8 +41,32 @@ function changeColor (e) {
     if (e.type === 'mouseover' &&  !mouseDown) return;
     if (rainbowButton.classList.contains('toggled')) {
         paintColor = randomColor();
+        console.log(paintColor);
+    } else if (shadingButton.classList.contains('toggled')) {
+        //Get the current opacity of the div
+        let currentSquareOpacity = e.target.style.opacity;
+        //Turn the current opacity into a number(FLOAT)
+        let opacityNumHolder = parseFloat(currentSquareOpacity);
+        //Grab the alpha of the paint color
+        let alpha = parseFloat(returnAlpha(paintColor));
+
+
+
+        //Check if the opacity is less than 0.9
+        if (opacityNumHolder <= 0.9) {
+                opacityNumHolder = Math.round((opacityNumHolder + 0.1) * 10) / 10;
+                e.target.style.opacity = opacityNumHolder;
+
+        } else if (opacityNumHolder === 1.0) {
+            e.target.style.opacity = 1.0;
+        } else {
+            e.target.style.opacity = 0.1;
+        }
+        console.log(e.target.style.opacity);
     } else {
         colorPicking();
+        e.target.style.opacity = 1.0;
+        console.log(paintColor);
     }
     e.preventDefault();
     e.target.style.backgroundColor = paintColor;
@@ -80,25 +104,37 @@ function toggleGridLines() {
 //Updates the current color from what is picked by the user
 function colorPicking() {
     let color = colorPicker.value;
-    paintColor = color;
+    paintColor = hexToRGB(color);
 }
 //Picks are random color and converts it to hex
 function randomColor() {
     let r = Math.floor((Math.random() * 255) + 1);
     let g = Math.floor((Math.random() * 255) + 1);
     let b = Math.floor((Math.random() * 255) + 1);
-    
-    //Convert RGB to Hex
-    let rHex = r.toString(16);
-    let gHex = g.toString(16);
-    let bHex = b.toString(16);
-    let hex =  "#" + rHex + gHex + bHex;
-    
-    return hex;
+    let a = "1.0";
+    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 }
 
-function shadingColor(color) {
+//Adds to the ALPHA value on RGBA  
+//RETURNS A STRING VALUE 
+function returnAlpha(color) {
+    let slicedAlpha = color.slice(color.length - 4, color.length - 1);
+    return slicedAlpha;
+}
 
+function changeAlpha(color, alpha) {
+    let resetRGBA = color.replace(/\d[.]\d/, alpha);
+    return resetRGBA;
+}
+
+
+function hexToRGB(hex) {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+    let a = "1.0";
+
+    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 }
 
 
@@ -110,9 +146,12 @@ gridLineButton.addEventListener('click', toggleGridLines);
 colorPicker.addEventListener('input', colorPicking);
 rainbowButton.addEventListener('click', () => {
     rainbowButton.classList.toggle('toggled');
+    shadingButton.classList.remove('toggled');
+    
 });
 shadingButton.addEventListener('click', () => {
     shadingButton.classList.toggle('toggled');
+    rainbowButton.classList.remove('toggled');
 });
 
 
@@ -121,9 +160,4 @@ shadingButton.addEventListener('click', () => {
 
 //Function Calls
 createGrid(DEFAULTSIZE);
-
-const header = document.querySelector('.header');
-let bgColor = window.getComputedStyle(header, null);
-let rgba = bgColor.getPropertyValue('background-color');
-
 

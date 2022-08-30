@@ -14,7 +14,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bolder;
     padding: 15px;
-    background-color: rgb(0, 255, 255, 0.9);
 }
 
 .main-body {
@@ -43,7 +42,7 @@ body {
 }
 
 .canvas {
-    background-color: white;
+    background-color: transparent;
     min-height: 500px;
     min-width: 500px;
     margin: 20px;
