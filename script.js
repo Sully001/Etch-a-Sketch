@@ -17,6 +17,7 @@ const gridLineButton = document.querySelector('.toggle-lines');
 const colorPicker = document.querySelector('.color-picker');
 const rainbowButton = document.querySelector('.rainbow');
 const shadingButton = document.querySelector('.shading');
+const eraserButton = document.querySelector('.eraser');
 
 //Creating the grid using CSS GRID
 function createGrid(size) {
@@ -43,26 +44,28 @@ function changeColor (e) {
         paintColor = randomColor();
         console.log(paintColor);
     } else if (shadingButton.classList.contains('toggled')) {
+        //paintColor = "rgb(0, 0, 0)";
         //Get the current opacity of the div
         let currentSquareOpacity = e.target.style.opacity;
         //Turn the current opacity into a number(FLOAT)
         let opacityNumHolder = parseFloat(currentSquareOpacity);
-        //Grab the alpha of the paint color
-        let alpha = parseFloat(returnAlpha(paintColor));
-
-
 
         //Check if the opacity is less than 0.9
         if (opacityNumHolder <= 0.9) {
                 opacityNumHolder = Math.round((opacityNumHolder + 0.1) * 10) / 10;
                 e.target.style.opacity = opacityNumHolder;
-
+            //If not check if it is at max OPAQUENESS
         } else if (opacityNumHolder === 1.0) {
             e.target.style.opacity = 1.0;
         } else {
+            //Otherwise set it to the lowest opaqueness
             e.target.style.opacity = 0.1;
         }
-        console.log(e.target.style.opacity);
+        //console.log(e.target.style.opacity);
+    } else if (eraserButton.classList.contains('toggled')) {
+        e.target.style.opacity = 1.0;
+        paintColor = "transparent";
+        e.target.style.removeProperty('opacity');
     } else {
         colorPicking();
         e.target.style.opacity = 1.0;
@@ -77,6 +80,7 @@ function clearGridColor() {
     const grid = document.querySelectorAll('.sqaure');
     grid.forEach((gridSquare) => {
         gridSquare.style.backgroundColor = 'white';
+        gridSquare.style.removeProperty('opacity');
     })
 }
 
@@ -145,13 +149,22 @@ gridLineButton.addEventListener('click', toggleGridLines);
 gridLineButton.addEventListener('click', toggleGridLines);
 colorPicker.addEventListener('input', colorPicking);
 rainbowButton.addEventListener('click', () => {
-    rainbowButton.classList.toggle('toggled');
+    eraserButton.classList.remove('toggled');
     shadingButton.classList.remove('toggled');
+    rainbowButton.classList.toggle('toggled');
+    
     
 });
 shadingButton.addEventListener('click', () => {
-    shadingButton.classList.toggle('toggled');
+    eraserButton.classList.remove('toggled');
     rainbowButton.classList.remove('toggled');
+    shadingButton.classList.toggle('toggled');
+    
+});
+eraserButton.addEventListener('click', () => {
+    shadingButton.classList.remove('toggled');
+    rainbowButton.classList.remove('toggled');
+    eraserButton.classList.toggle('toggled');
 });
 
 
